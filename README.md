@@ -13,7 +13,36 @@ It enhances usability by providing **quick commands to switch contexts, namespac
 ✅ **Retains last used namespace per cluster** instead of resetting to `default`  
 ✅ **Autocompletion support for `kubectl`, `kubectx`, and `kubens`  
 
----
+## 📥 Prerequisites
+
+## To enable Bash completion for kubectl and aliases, run:
+
+```sh
+sudo yum install -y bash-completion # For redhat or centos
+exec bash    # Restart shell for changes to take effect
+type _get_comp_words_by_ref  # Check if Bash completion is working
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
+source ~/.bashrc  # Reload Bash settings
+```
+
+## Enable Shortcuts for kubectl
+
+```sh
+alias k='kubectl'  # Set 'k' as a shortcut for kubectl
+complete -F __start_kubectl k  # Enable autocompletion for alias 'k'
+echo 'complete -F __start_kubectl k' >> ~/.bashrc  # Persist autocompletion
+```
+
+## Install kubectx and kubens for Context/Namespace Switching
+
+```sh
+sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+echo "source /opt/kubectx/completion/kubectx.bash" >> ~/.bashrc
+echo "source /opt/kubectx/completion/kubens.bash" >> ~/.bashrc
+source ~/.bashrc
+```
 
 ## 📥 Installation
 
@@ -21,6 +50,7 @@ It enhances usability by providing **quick commands to switch contexts, namespac
 ```sh
 git clone https://github.com/yourusername/kubeprompt.git
 cd kubeprompt
+```
 
 
 # 🚀 kubeprompt

@@ -28,6 +28,8 @@ unset rc
 export PATH="$PATH:/usr/local/bin/:/usr/sbin/"
 # ===[ KUBERNETES MULTI-CLUSTER CONFIGURATION ]=== #
 
+# defaults to default namespace
+export CURRENT_NAMESPACE="default"
 # Enable kubectl autocompletion (if available)
 if command -v kubectl &>/dev/null; then
     source <(kubectl completion bash)

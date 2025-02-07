@@ -28,8 +28,11 @@ unset rc
 export PATH="$PATH:/usr/local/bin/:/usr/sbin/"
 # ===[ KUBERNETES MULTI-CLUSTER CONFIGURATION ]=== #
 
-# defaults to default namespace
-export CURRENT_NAMESPACE="default"
+if [[ -z "$CURRENT_NAMESPACE" ]]; then
+	export CURRENT_NAMESPACE="default"
+	kubectl config set-context --current --namespace=$CURRENT_NAMESPACE 2>/dev/null
+fi
+
 # Enable kubectl autocompletion (if available)
 if command -v kubectl &>/dev/null; then
     source <(kubectl completion bash)
@@ -79,6 +82,7 @@ function update_kube_prompt() {
     # Get the current namespace
     #kube_namespace=$(get_kube_namespace)
     kube_namespace=$CURRENT_NAMESPACE
+    kubectl config set-context --current --namespace=$CURRENT_NAMESPACE >/dev/null
 
     # Update the prompt with both cluster and namespace
     export PS1="\[\033[1;32m\]\u@\h \[\033[1;34m\][\W] \[\033[1;33m\]$kube_short_name | $CURRENT_NAMESPACE\[\033[0m\] \$ "
@@ -108,6 +112,18 @@ function kn() {
 	export CURRENT_NAMESPACE="$new_namespace"
 	command kubens "$new_namespace" && update_kube_prompt
 
+}
+
+function knd() {
+	local new_namespace="default"
+	export CURRENT_NAMESPACE="$new_namespace"
+	command kubens "$new_namespace" && update_kube_prompt
+}
+
+function kns() {
+	local new_namespace="kube-system"
+	export CURRENT_NAMESPACE="$new_namespace"
+	command kubens "$new_namespace" && update_kube_prompt
 }
 
 # Function to switch Kubernetes context and reset namespace

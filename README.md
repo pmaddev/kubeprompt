@@ -14,6 +14,7 @@ It enhances usability by providing **quick commands to switch contexts, namespac
 ✅ **Autocompletion support for `kubectl`, `kubectx`, and `kubens`  
 
 ## 📥 Prerequisites
+## Note: As its context based which is not seamlessly sync across the terminals
 
 ## To enable Bash completion for kubectl and aliases, run:
 
